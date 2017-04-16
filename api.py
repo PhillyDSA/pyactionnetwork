@@ -1,13 +1,23 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 import requests
 
 
 class ActionNetworkApi:
+    """Python wrapper for Action Network API."""
+
     def __init__(self, api_key, **kwargs):
+        """Instantiate the API client and get config."""
         self.headers = {"OSDI-API-Token": api_key}
-        self.config = requests.get(url="https://actionnetwork.org/api/v2/", headers=headers).json()
+        self.refresh_config()
         self.base_url = self.config.get('links', {}).get('self', 'https://actionnetwork.org/api/v2/')
         print(self.config['motd'])
+
+    def refresh_config(self):
+        """Get a new version of the base_url config."""
+        self.config = requests.get(url="https://actionnetwork.org/api/v2/",
+                                   headers=self.headers).json()
 
     def resource_to_url(self, resource):
         """Convert a named endpoint into a URL.
@@ -55,5 +65,5 @@ class ActionNetworkApi:
             search_by=search_by,
             search_string=search_string)
 
-        resp = requests.get(url, headers=headers)
+        resp = requests.get(url, headers=self.headers)
         return resp.json()
