@@ -23,11 +23,10 @@ class ActionNetworkApi:
         """Convert a named endpoint into a URL.
 
         Args:
-            resource (string):
+            resource (str):
                 resource name (e.g. 'links', 'people', etc.)
         Returns:
-            (string) Full resource endpoint URL.
-
+            (str) Full resource endpoint URL.
         """
         if resource in self.config.get('_links', {}).keys():
             return self.config['_links'][resource]['href']
@@ -40,7 +39,7 @@ class ActionNetworkApi:
         """Get a resource endpoint by name.
 
         Args:
-            resource (string):
+            resource (str):
                 Resource endpoint of the format 'people', 'events', 'lists', etc.
         Returns:
             (dict) API response from endpoint or `None` if not found/valid.
@@ -48,22 +47,40 @@ class ActionNetworkApi:
         url = self.resource_to_url(resource)
         return requests.get(url, headers=self.headers).json()
 
-    def get_person(self, search_by='email', search_string=None):
+    def get_person(self, person_id=None, search_by='email', search_string=None):
         """Search for a user.
 
         Args:
-            search_by (string):
+            search_by (str):
                 Field by which to search for a user. 'email' is the default.
-            search_string (string):
+            search_string (str):
                 String to search for within the field given by `search_by`
 
         Returns:
-            person json if found, otherwise `None`
+            (dict) person json if found, otherwise `None`
         """
-        url = "{base_url}people/?filter={search_by} eq '{search_string}'".format(
-            base_url=self.base_url,
-            search_by=search_by,
-            search_string=search_string)
+        if person_id:
+            url = "{0}people/{1}".format(self.base_url, person_id)
+        else:
+            url = "{0}people/?filter={1} eq '{2}'".format(self.base_url, search_by, search_string)
 
         resp = requests.get(url, headers=self.headers)
         return resp.json()
+
+    def search(self, resource, operator, term):
+        """Search for a given `term` within a `resource`.
+
+        Args:
+            resource (str):
+                Resource family within which to search. Should be one of
+                'people', 'events', etc.
+            operator (str):
+                Operator by which to search. Should be something like
+                'eq', 'gt', 'lt', etc.
+            term (str):
+                Term for which to search. Can be an email, name, etc.
+
+        Returns:
+            (dict) Object if found, otherwise `None`.
+        """
+        pass

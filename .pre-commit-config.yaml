@@ -12,8 +12,8 @@
   sha: v0.0.2
   hooks:
   - id: pydocstyle
-    exclude: "migrations/*"
-    args: ['--ignore=D100,D203']
+    exclude: "(migrations/*|tests/*)"
+    args: ['--ignore=D100,D105,D203,D400']
 
 - repo: git://github.com/pricematch/pricematch-pre-commit-hooks
   sha: 82b0c142b363547cc873bc6581fa3074087a37d2
