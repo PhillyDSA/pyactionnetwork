@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
+from urllib.parse import urlencode
 
 
 class ActionNetworkApi:
@@ -62,7 +63,10 @@ class ActionNetworkApi:
         if person_id:
             url = "{0}people/{1}".format(self.base_url, person_id)
         else:
-            url = "{0}people/?filter={1} eq '{2}'".format(self.base_url, search_by, search_string)
+            url = "{0}people/?filter={1} eq '{2}'".format(
+                self.base_url,
+                search_by,
+                urlencode(search_string))
 
         resp = requests.get(url, headers=self.headers)
         return resp.json()
