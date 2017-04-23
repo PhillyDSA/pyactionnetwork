@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import re
-
 import pytest
+import re
 import responses
-from responses import GET
+import json
 
-import api
+from pyactionnetwork import api
+from responses import GET, POST, PUT
 
-DEFAULT_URL = re.compile(r'https://actionnetwork.org/.*')
+
+DEFAULT_URL = re.compile(r'https://actionnetwork\.org/.*')
 
 
 @responses.activate
@@ -38,11 +39,99 @@ def test_resource_to_url():
 def test_get_resource():
     api = get_api()
 
-    @responses.activate
-    def test():
+    with responses.RequestsMock() as resps:
         with open('test_data/people.json', 'r') as f:
-            responses.add(GET, DEFAULT_URL, f.read())
-        resp = api.get_resource('people')
-        assert len(resp['odsi:people']) == 1
-        assert resp['odsi:people'][0]['given_name'] == 'Test'
-        assert resp['odsi:people'][0]['given_name'] == 'User'
+            resps.add(GET, DEFAULT_URL, f.read())
+        resp = api.get_resource('people')['_embedded']
+        assert len(resp['osdi:people']) == 1
+        print(resp['osdi:people'][0])
+        assert resp['osdi:people'][0]['given_name'] == 'Test'
+        assert resp['osdi:people'][0]['family_name'] == 'User'
+
+
+def test_create_person():
+    api = get_api()
+
+    person = {
+        'family_name': 'Doe',
+        'given_name': 'John',
+        'address_lines': ['800 Nowhere St.', 'Apt. 1'],
+        'locality': 'Philadelphia',
+        'region': 'PA',
+        'country': 'US',
+        'postal_code': 19125,
+        'email': 'john.doe@example.com'
+    }
+
+    def callback(request):
+        payload = json.loads(request.body)
+        headers = {'content_type': 'application/json'}
+
+        assert payload['person']['family_name'] == person['family_name']
+        assert payload['person']['given_name'] == person['given_name']
+
+        assert 'postal_addresses' in payload['person']
+        assert 'email_addresses' in payload['person']
+        address = payload['person']['postal_addresses'][0]
+        email = payload['person']['email_addresses'][0]
+
+        assert address['address_lines'] == person['address_lines']
+        assert address['locality'] == person['locality']
+        assert address['region'] == person['region']
+        assert address['country'] == person['country']
+        assert address['postal_code'] == person['postal_code']
+
+        assert email['address'] == person['email']
+
+        return (200, headers, json.dumps(payload))
+
+    with responses.RequestsMock() as resps:
+        resps.add_callback(
+            POST,
+            'https://actionnetwork.org/api/v2/people/',
+            callback=callback)
+        api.create_person(person)
+
+
+def test_update_person():
+    api = get_api()
+
+    person = {
+        'family_name': 'Doe',
+        'given_name': 'John',
+        'address_lines': ['800 Nowhere St.', 'Apt. 1'],
+        'locality': 'Philadelphia',
+        'region': 'PA',
+        'country': 'US',
+        'postal_code': 19147,
+        'email': 'john.doe@example.com'
+    }
+
+    def callback(request):
+        payload = json.loads(request.body)
+        headers = {'content_type': 'application/json'}
+
+        assert payload['family_name'] == person['family_name']
+        assert payload['given_name'] == person['given_name']
+
+        assert 'postal_addresses' in payload
+        assert 'email_addresses' in payload
+        address = payload['postal_addresses'][0]
+        email = payload['email_addresses'][0]
+
+        assert address['address_lines'] == person['address_lines']
+        assert address['locality'] == person['locality']
+        assert address['region'] == person['region']
+        assert address['country'] == person['country']
+        assert address['postal_code'] == person['postal_code']
+
+        assert email['address'] == person['email']
+
+        return (200, headers, json.dumps(payload))
+
+    with responses.RequestsMock() as resps:
+        resps.add_callback(
+            PUT,
+            'https://actionnetwork.org/api/v2/people/0',
+            callback=callback)
+        api.update_person(person_id=0, person=person)

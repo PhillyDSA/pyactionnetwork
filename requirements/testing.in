@@ -4,3 +4,4 @@ hypothesis
 coverage
 pytest-cov
 pre-commit
+responses

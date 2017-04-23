@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
+from urllib.parse import urlencode
 
 
 class ActionNetworkApi:
@@ -62,9 +63,78 @@ class ActionNetworkApi:
         if person_id:
             url = "{0}people/{1}".format(self.base_url, person_id)
         else:
-            url = "{0}people/?filter={1} eq '{2}'".format(self.base_url, search_by, search_string)
+            url = "{0}people/?filter={1} eq '{2}'".format(
+                self.base_url,
+                search_by,
+                urlencode(search_string))
 
         resp = requests.get(url, headers=self.headers)
+        return resp.json()
+
+    def create_person(self, person):
+        """Create a user.
+
+        Args:
+            person (dict):
+                Dict-like object that has keys for 'given_name', 'family_name',
+                'address_lines', 'locality', 'region', 'country', 'postal_code', and
+                'email'.
+        Returns:
+            (dict) A fully fleshed out dictionary representing a person, containing the above
+            attributes and additional attributes set by Action Network.
+        """
+        url = "{0}people/".format(self.base_url)
+        payload = {
+            'person': {
+                'family_name': person['family_name'],
+                'given_name': person['given_name'],
+                'postal_addresses': [{
+                    'address_lines': person['address_lines'],
+                    'locality': person['locality'],
+                    'region': person['region'],
+                    'country': person['country'],
+                    'postal_code': person['postal_code']
+                }],
+                'email_addresses': [{
+                    'address': person['email']
+                }]
+            }
+        }
+
+        print(payload)
+
+        resp = requests.post(url, json=payload, headers=self.headers)
+        return resp.json()
+
+    def update_person(self, person_id, person):
+        """Update a user.
+
+        Args:
+            person (dict):
+                Dict-like object that has keys for 'given_name', 'family_name',
+                'address_lines', 'locality', 'region', 'country', 'postal_code', and
+                'email'.
+        Returns:
+            (dict) A fully fleshed out dictionary representing a person, containing the above
+            attributes and additional attributes set by Action Network.
+        """
+        url = "{0}people/{1}".format(self.base_url, person_id)
+        payload = {
+            'family_name': person['family_name'],
+            'given_name': person['given_name'],
+            'postal_addresses': [{
+                'address_lines': person['address_lines'],
+                'locality': person['locality'],
+                'region': person['region'],
+                'country': person['country'],
+                'postal_code': person['postal_code']
+            }],
+            'email_addresses': [{
+                'address': person['email']
+            }]
+        }
+
+        resp = requests.put(url, json=payload, headers=self.headers)
         return resp.json()
 
     def search(self, resource, operator, term):
