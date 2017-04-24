@@ -14,4 +14,5 @@ lint:
 	pre-commit run -a
 
 test:
-	pytest --cov=api
+	pytest --cov
+	coverage html

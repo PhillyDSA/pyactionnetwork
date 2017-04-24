@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from urllib.parse import urlencode
+from urllib.parse import quote
 
 
 class ActionNetworkApi:
@@ -66,7 +66,7 @@ class ActionNetworkApi:
             url = "{0}people/?filter={1} eq '{2}'".format(
                 self.base_url,
                 search_by,
-                urlencode(search_string))
+                quote(search_string))
 
         resp = requests.get(url, headers=self.headers)
         return resp.json()

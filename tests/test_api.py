@@ -44,7 +44,6 @@ def test_get_resource():
             resps.add(GET, DEFAULT_URL, f.read())
         resp = api.get_resource('people')['_embedded']
         assert len(resp['osdi:people']) == 1
-        print(resp['osdi:people'][0])
         assert resp['osdi:people'][0]['given_name'] == 'Test'
         assert resp['osdi:people'][0]['family_name'] == 'User'
 
@@ -135,3 +134,18 @@ def test_update_person():
             'https://actionnetwork.org/api/v2/people/0',
             callback=callback)
         api.update_person(person_id=0, person=person)
+
+
+def test_get_person():
+    api = get_api()
+
+    @responses.activate
+    def test():
+        with open('test_data/get_person.json', 'r') as f:
+            responses.add(GET, DEFAULT_URL, f.read())
+        resp = api.get_person(search_string='jane@example.com')
+        assert len(resp['_embedded']['osdi:people']) == 1
+        assert resp['_embedded']['osdi:people'][0]['given_name'] == 'jane'
+        assert resp['_embedded']['osdi:people'][0]['family_name'] == 'doe'
+        assert responses.calls[0].request.url == "https://actionnetwork.org/api/v2/people/?filter=email%20eq%20'jane%40example.com'"  # noqa
+    test()
