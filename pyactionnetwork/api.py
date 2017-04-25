@@ -71,67 +71,117 @@ class ActionNetworkApi:
         resp = requests.get(url, headers=self.headers)
         return resp.json()
 
-    def create_person(self, person):
+    def create_person(self,
+                      email=None,
+                      given_name=None,
+                      family_name=None,
+                      address=list(),
+                      city=None,
+                      state=None,
+                      country=None,
+                      postal_code=None,
+                      tags=list()):
         """Create a user.
 
+        Documentation here: https://actionnetwork.org/docs/v2/person_signup_helper
+
         Args:
-            person (dict):
-                Dict-like object that has keys for 'given_name', 'family_name',
-                'address_lines', 'locality', 'region', 'country', 'postal_code', and
-                'email'.
+            email ((str, list)):
+                email address (or, if list, addresses) of the person
+            given_name (str, optional):
+                first name of the person
+            family_name (str, optional):
+                last name of the person
+            address ((str, list), optional):
+                address of the person. if a str, then one address line
+                only. if a list, then address_lines in action network
+                will be respected (for apartments or companies etc.)
+            city (str, optional):
+                city of the person.
+            country (str, optional):
+                country code for the person.
+            postal_code (str, optional):
+                postal or zip code of the person.
+            tags ((str, list), optional):
+                add any tags you want when creating a person.
         Returns:
-            (dict) A fully fleshed out dictionary representing a person, containing the above
-            attributes and additional attributes set by Action Network.
+            (dict) A fully fleshed out dictionary representing a person,
+            containing the above attributes and additional attributes
+            set by Action Network.
         """
         url = "{0}people/".format(self.base_url)
         payload = {
             'person': {
-                'family_name': person['family_name'],
-                'given_name': person['given_name'],
+                'family_name': family_name,
+                'given_name': given_name,
                 'postal_addresses': [{
-                    'address_lines': person['address_lines'],
-                    'locality': person['locality'],
-                    'region': person['region'],
-                    'country': person['country'],
-                    'postal_code': person['postal_code']
+                    'address_lines': list(address),
+                    'locality': city,
+                    'region': state,
+                    'country': country,
+                    'postal_code': postal_code
                 }],
                 'email_addresses': [{
-                    'address': person['email']
-                }]
+                    'address': email
+                }],
+                'tags': list(tags)
             }
         }
-
-        print(payload)
 
         resp = requests.post(url, json=payload, headers=self.headers)
         return resp.json()
 
-    def update_person(self, person_id, person):
+    def update_person(self,
+                      person_id=None,
+                      email=None,
+                      given_name=None,
+                      family_name=None,
+                      address=list(),
+                      city=None,
+                      state=None,
+                      country=None,
+                      postal_code=None,
+                      tags=list()):
         """Update a user.
 
         Args:
-            person (dict):
-                Dict-like object that has keys for 'given_name', 'family_name',
-                'address_lines', 'locality', 'region', 'country', 'postal_code', and
-                'email'.
+            email ((str, list)):
+                email address (or, if list, addresses) of the person
+            given_name (str, optional):
+                first name of the person
+            family_name (str, optional):
+                last name of the person
+            address ((str, list), optional):
+                address of the person. if a str, then one address line
+                only. if a list, then address_lines in action network
+                will be respected (for apartments or companies etc.)
+            city (str, optional):
+                city of the person.
+            country (str, optional):
+                country code for the person.
+            postal_code (str, optional):
+                postal or zip code of the person.
+            tags ((str, list), optional):
+                add any tags you want when creating a person.
         Returns:
             (dict) A fully fleshed out dictionary representing a person, containing the above
             attributes and additional attributes set by Action Network.
         """
         url = "{0}people/{1}".format(self.base_url, person_id)
         payload = {
-            'family_name': person['family_name'],
-            'given_name': person['given_name'],
+            'family_name': family_name,
+            'given_name': given_name,
             'postal_addresses': [{
-                'address_lines': person['address_lines'],
-                'locality': person['locality'],
-                'region': person['region'],
-                'country': person['country'],
-                'postal_code': person['postal_code']
+                'address_lines': list(address),
+                'locality': city,
+                'region': state,
+                'country': country,
+                'postal_code': postal_code
             }],
             'email_addresses': [{
-                'address': person['email']
-            }]
+                'address': email
+            }],
+            'tags': list(tags)
         }
 
         resp = requests.put(url, json=payload, headers=self.headers)

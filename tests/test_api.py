@@ -54,9 +54,9 @@ def test_create_person():
     person = {
         'family_name': 'Doe',
         'given_name': 'John',
-        'address_lines': ['800 Nowhere St.', 'Apt. 1'],
-        'locality': 'Philadelphia',
-        'region': 'PA',
+        'address': ['800 Nowhere St.', 'Apt. 1'],
+        'city': 'Philadelphia',
+        'state': 'PA',
         'country': 'US',
         'postal_code': 19125,
         'email': 'john.doe@example.com'
@@ -74,9 +74,9 @@ def test_create_person():
         address = payload['person']['postal_addresses'][0]
         email = payload['person']['email_addresses'][0]
 
-        assert address['address_lines'] == person['address_lines']
-        assert address['locality'] == person['locality']
-        assert address['region'] == person['region']
+        assert address['address_lines'] == person['address']
+        assert address['locality'] == person['city']
+        assert address['region'] == person['state']
         assert address['country'] == person['country']
         assert address['postal_code'] == person['postal_code']
 
@@ -89,7 +89,7 @@ def test_create_person():
             POST,
             'https://actionnetwork.org/api/v2/people/',
             callback=callback)
-        api.create_person(person)
+        api.create_person(**person)
 
 
 def test_update_person():
@@ -98,9 +98,9 @@ def test_update_person():
     person = {
         'family_name': 'Doe',
         'given_name': 'John',
-        'address_lines': ['800 Nowhere St.', 'Apt. 1'],
-        'locality': 'Philadelphia',
-        'region': 'PA',
+        'address': ['800 Nowhere St.', 'Apt. 1'],
+        'city': 'Philadelphia',
+        'state': 'PA',
         'country': 'US',
         'postal_code': 19147,
         'email': 'john.doe@example.com'
@@ -118,9 +118,9 @@ def test_update_person():
         address = payload['postal_addresses'][0]
         email = payload['email_addresses'][0]
 
-        assert address['address_lines'] == person['address_lines']
-        assert address['locality'] == person['locality']
-        assert address['region'] == person['region']
+        assert address['address_lines'] == person['address']
+        assert address['locality'] == person['city']
+        assert address['region'] == person['state']
         assert address['country'] == person['country']
         assert address['postal_code'] == person['postal_code']
 
@@ -133,7 +133,7 @@ def test_update_person():
             PUT,
             'https://actionnetwork.org/api/v2/people/0',
             callback=callback)
-        api.update_person(person_id=0, person=person)
+        api.update_person(person_id=0, **person)
 
 
 def test_get_person():
