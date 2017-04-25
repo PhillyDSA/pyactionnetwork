@@ -80,7 +80,8 @@ class ActionNetworkApi:
                       state=None,
                       country=None,
                       postal_code=None,
-                      tags=list()):
+                      tags=list(),
+                      custom_fields=dict()):
         """Create a user.
 
         Documentation here: https://actionnetwork.org/docs/v2/person_signup_helper
@@ -104,6 +105,8 @@ class ActionNetworkApi:
                 postal or zip code of the person.
             tags ((str, list), optional):
                 add any tags you want when creating a person.
+            custom_fields (dict, optional):
+                dict of custom fields to pass to the api
         Returns:
             (dict) A fully fleshed out dictionary representing a person,
             containing the above attributes and additional attributes
@@ -124,7 +127,8 @@ class ActionNetworkApi:
                 'email_addresses': [{
                     'address': email
                 }],
-                'tags': list(tags)
+                'tags': list(tags),
+                'custom_fields': custom_fields,
             }
         }
 
@@ -141,7 +145,8 @@ class ActionNetworkApi:
                       state=None,
                       country=None,
                       postal_code=None,
-                      tags=list()):
+                      tags=list(),
+                      custom_fields=dict()):
         """Update a user.
 
         Args:
@@ -163,6 +168,8 @@ class ActionNetworkApi:
                 postal or zip code of the person.
             tags ((str, list), optional):
                 add any tags you want when creating a person.
+            custom_fields (dict, optional):
+                dict of custom fields to pass to the api
         Returns:
             (dict) A fully fleshed out dictionary representing a person, containing the above
             attributes and additional attributes set by Action Network.
@@ -181,7 +188,8 @@ class ActionNetworkApi:
             'email_addresses': [{
                 'address': email
             }],
-            'tags': list(tags)
+            'tags': list(tags),
+            'custom_fields': custom_fields,
         }
 
         resp = requests.put(url, json=payload, headers=self.headers)
