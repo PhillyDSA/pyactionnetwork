@@ -73,13 +73,13 @@ class ActionNetworkApi:
 
     def create_person(self,
                       email=None,
-                      given_name=None,
-                      family_name=None,
+                      given_name='',
+                      family_name='',
                       address=list(),
-                      city=None,
-                      state=None,
-                      country=None,
-                      postal_code=None,
+                      city='',
+                      state='',
+                      country='',
+                      postal_code='',
                       tags=list(),
                       custom_fields=dict()):
         """Create a user.
@@ -127,9 +127,9 @@ class ActionNetworkApi:
                 'email_addresses': [{
                     'address': email
                 }],
-                'tags': list(tags),
                 'custom_fields': custom_fields,
-            }
+            },
+            'add_tags': list(tags)
         }
 
         resp = requests.post(url, json=payload, headers=self.headers)
@@ -188,7 +188,7 @@ class ActionNetworkApi:
             'email_addresses': [{
                 'address': email
             }],
-            'tags': list(tags),
+            'add_tags': list(tags),
             'custom_fields': custom_fields,
         }
 
