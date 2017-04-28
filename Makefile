@@ -16,3 +16,10 @@ lint:
 test:
 	pytest --cov
 	coverage html
+
+build: clean
+	python setup.py sdist
+	python setup.py bdist_wheel
+
+distribute: build
+	twine upload dist/* -r pypi
