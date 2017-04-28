@@ -1,0 +1,16 @@
+[run]
+omit=
+    venv
+    */python?.?/*
+    */site-packages/*
+    .tox/*
+    static
+    site_assets/*
+    src/*
+    /**/migrations*
+include=
+    pyactionnetwork/*
+branch = true
+
+[html]
+directory = htmlcov

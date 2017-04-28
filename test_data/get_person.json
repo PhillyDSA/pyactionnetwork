@@ -1,0 +1,95 @@
+{
+    "per_page": 25,
+    "page": 1,
+    "_links": {
+        "next": {
+            "href": "https://actionnetwork.org/api/v2/people?filter=email%20eq%20'jane%40example.com'&page=2"
+        },
+        "osdi:people": [
+            {
+                "href": "https://actionnetwork.org/api/v2/people/asdf-asdf-asdf-asdf-asdf"
+            }
+        ],
+        "curies": [
+            {
+                "name": "osdi",
+                "href": "https://actionnetwork.org/docs/v2/{rel}",
+                "templated": true
+            },
+            {
+                "name": "action_network",
+                "href": "https://actionnetwork.org/docs/v2/{rel}",
+                "templated": true
+            }
+        ],
+        "self": {
+            "href": "https://actionnetwork.org/api/v2/people"
+        }
+    },
+    "_embedded": {
+        "osdi:people": [
+            {
+                "given_name": "jane",
+                "family_name": "doe",
+                "identifiers": [
+                    "action_network:asdf-asdf-asdf-asdf-asdf"
+                ],
+                "email_addresses": [
+                    {
+                        "primary": true,
+                        "address": "jane@example.com",
+                        "status": "subscribed"
+                    }
+                ],
+                "postal_addresses": [
+                    {
+                        "primary": true,
+                        "address_lines": [
+                            "1001 Main Street, Apt 3"
+                        ],
+                        "locality": "Philadelphia",
+                        "region": "PA",
+                        "postal_code": "19130",
+                        "country": "US",
+                        "location": {
+                            "latitude": 39.3342,
+                            "longitude": -75.0022,
+                            "accuracy": "Approximate"
+                        }
+                    }
+                ],
+                "_links": {
+                    "self": {
+                        "href": "https://actionnetwork.org/api/v2/people/asdf-asdf-asdf-asdf-asdf"
+                    },
+                    "osdi:signatures": {
+                        "href": "https://actionnetwork.org/api/v2/people/asdf-asdf-asdf-asdf-asdf/signatures"
+                    },
+                    "osdi:submissions": {
+                        "href": "https://actionnetwork.org/api/v2/people/asdf-asdf-asdf-asdf-asdf/submissions"
+                    },
+                    "osdi:donations": {
+                        "href": "https://actionnetwork.org/api/v2/people/asdf-asdf-asdf-asdf-asdf/donations"
+                    },
+                    "osdi:taggings": {
+                        "href": "https://actionnetwork.org/api/v2/people/asdf-asdf-asdf-asdf-asdf/taggings"
+                    },
+                    "osdi:outreaches": {
+                        "href": "https://actionnetwork.org/api/v2/people/asdf-asdf-asdf-asdf-asdf/outreaches"
+                    },
+                    "osdi:attendances": {
+                        "href": "https://actionnetwork.org/api/v2/people/asdf-asdf-asdf-asdf-asdf/attendances"
+                    }
+                },
+                "custom_fields": {
+                    "Phone Number": "5554012200"
+                },
+                "created_date": "2017-02-08T18:10:03Z",
+                "modified_date": "2017-04-24T02:29:02Z",
+                "languages_spoken": [
+                    "en"
+                ]
+            }
+        ]
+    }
+}
