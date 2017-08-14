@@ -6,7 +6,7 @@ import re
 import responses
 import json
 
-from pyactionnetwork import api
+import pyactionnetwork
 from responses import GET, POST, PUT
 
 
@@ -17,7 +17,7 @@ DEFAULT_URL = re.compile(r'https://actionnetwork\.org/.*')
 def get_api():
     with open('test_data/self.json', 'r') as f:
         responses.add(GET, DEFAULT_URL, f.read())
-    return api.ActionNetworkApi(api_key="test")
+    return pyactionnetwork.ActionNetworkApi(api_key="test")
 
 
 def test_api_creation():
