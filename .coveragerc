@@ -12,5 +12,10 @@ include=
     pyactionnetwork/*
 branch = true
 
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+
 [html]
 directory = htmlcov
