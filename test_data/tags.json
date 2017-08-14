@@ -1,0 +1,70 @@
+{
+  "total_pages": 1,
+  "per_page": 25,
+  "page": 1,
+  "total_records": 2,
+  "_links": {
+    "next": {
+      "href": "https://actionnetwork.org/api/v2/tags?page=2"
+    },
+    "osdi:tags": [
+      {
+        "href": "https://actionnetwork.org/api/v2/tags/ccc91387-2a79-4ec4-91e6-8104e931bd03"
+      },
+      {
+        "href": "https://actionnetwork.org/api/v2/tags/148b60ea-c74b-40f2-8e2c-c7baaa48eb12"
+      }
+    ],
+    "curies": [
+      {
+        "name": "osdi",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      },
+      {
+        "name": "action_network",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      }
+    ],
+    "self": {
+      "href": "https://actionnetwork.org/api/v2/tags"
+    }
+  },
+  "_embedded": {
+    "osdi:tags": [
+      {
+        "name": "2017_04_general_meeting",
+        "created_date": "2017-04-27T09:34:43Z",
+        "modified_date": "2017-04-27T09:34:43Z",
+        "identifiers": [
+          "action_network:ccc91387-2a79-4ec4-91e6-8104e931bd03"
+        ],
+        "_links": {
+          "self": {
+            "href": "https://actionnetwork.org/api/v2/tags/ccc91387-2a79-4ec4-91e6-8104e931bd03"
+          },
+          "osdi:taggings": {
+            "href": "https://actionnetwork.org/api/v2/tags/ccc91387-2a79-4ec4-91e6-8104e931bd03/taggings"
+          }
+        }
+      },
+      {
+        "name": "2017_06_convention",
+        "created_date": "2017-06-17T12:18:45Z",
+        "modified_date": "2017-06-17T12:18:45Z",
+        "identifiers": [
+          "action_network:148b60ea-c74b-40f2-8e2c-c7baaa48eb12"
+        ],
+        "_links": {
+          "self": {
+            "href": "https://actionnetwork.org/api/v2/tags/148b60ea-c74b-40f2-8e2c-c7baaa48eb12"
+          },
+          "osdi:taggings": {
+            "href": "https://actionnetwork.org/api/v2/tags/148b60ea-c74b-40f2-8e2c-c7baaa48eb12/taggings"
+          }
+        }
+      }
+    ]
+  }
+}

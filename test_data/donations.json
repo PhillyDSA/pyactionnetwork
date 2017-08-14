@@ -1,0 +1,72 @@
+{
+  "total_pages": 1,
+  "per_page": 25,
+  "page": 1,
+  "total_records": 1,
+  "_links": {
+    "next": {
+      "href": "https://actionnetwork.org/api/v2/donations?page=2"
+    },
+    "self": {
+      "href": "https://actionnetwork.org/api/v2/donations"
+    },
+    "curies": [
+      {
+        "name": "osdi",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      },
+      {
+        "name": "action_network",
+        "href": "https://actionnetwork.org/docs/v2/{rel}",
+        "templated": true
+      }
+    ],
+    "osdi:donations": [
+      {
+        "href": "https://actionnetwork.org/api/v2/donations/3039205h-5c40-4e44-bc9b-ed3985713cc8"
+      }
+    ]
+  },
+  "_embedded": {
+    "osdi:donations": [
+      {
+        "identifiers": [
+          "action_network:3039205h-5c40-4e44-bc9b-ed3985713cc8"
+        ],
+        "created_date": "2017-04-29T14:54:26Z",
+        "modified_date": "2017-07-29T21:06:26Z",
+        "currency": "USD",
+        "recipients": [
+          {
+            "display_name": "Philly DSA",
+            "amount": "10.00"
+          }
+        ],
+        "payment": {
+          "method": "Credit Card",
+          "reference_number": "3039205h-5c40-4e44-bc9b-ed3985713cc8",
+          "authorization_stored": false
+        },
+        "action_network:recurrence": {
+          "recurring": true,
+          "period": "Every 3 Months"
+        },
+        "action_network:person_id": "wjd4hds9-d6d8-43de-880e-6f85f0ac570b",
+        "action_network:fundraising_page_id": "e9djkd03-df03-46a5-93a1-62f253a40f93",
+        "_links": {
+          "self": {
+            "href": "https://actionnetwork.org/api/v2/donations/3039205h-5c40-4e44-bc9b-ed3985713cc8"
+          },
+          "osdi:fundraising_page": {
+            "href": "https://actionnetwork.org/api/v2/fundraising_pages/e9djkd03-df03-46a5-93a1-62f253a40f93"
+          },
+          "osdi:person": {
+            "href": "https://actionnetwork.org/api/v2/people/wjd4hds9-d6d8-43de-880e-6f85f0ac570b"
+          }
+        },
+        "amount": "10.00"
+      }
+    ]
+  }
+}
