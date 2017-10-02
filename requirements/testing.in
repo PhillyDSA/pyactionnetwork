@@ -10,3 +10,4 @@ jupyter[notebook]
 pycodestyle
 codecov
 ipdb
+wheel
