@@ -10,7 +10,7 @@ pip install pyactionnetwork
 
 ## Contributing
 
-All contributors agree to abide by the (Philadelphia DSA Code of Conduct)[https://github.com/PhillyDSA/code-of-conduct].
+All contributors agree to abide by the [Philadelphia DSA Code of Conduct](https://github.com/PhillyDSA/code-of-conduct).
 
 There are additional requirements that can be installed by:
 
