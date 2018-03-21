@@ -4,9 +4,12 @@
 import datetime
 import json
 
+from freezegun import freeze_time
+
 from pyactionnetwork.models import Tag, Donation
 
 
+@freeze_time('2017-08-14')
 def test_create_donation():
     with open('test_data/donations.json') as f:
         data = json.loads(f.read())
