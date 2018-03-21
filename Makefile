@@ -29,5 +29,5 @@ build: clean
 distribute: build
 	twine upload dist/* -r pypi
 
-ci: clean info test
+ci: clean test
 	codecov
