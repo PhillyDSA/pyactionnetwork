@@ -5,9 +5,7 @@ coverage
 pytest-cov
 pre-commit==0.13.6  # latest 0.16.3 doesn't work with pyenv
 responses
-pip-tools
-jupyter[notebook]
 pycodestyle
 codecov
-ipdb
 wheel
+freezegun
