@@ -23,7 +23,7 @@ pytest-cov==2.5.1
 pytest==3.2.2
 python-dateutil==2.6.1
 pyyaml==3.12              # via aspy.yaml, pre-commit
-requests==2.18.4
+requests==2.20.0
 responses==0.8.0
 six==1.11.0
 urllib3==1.22
