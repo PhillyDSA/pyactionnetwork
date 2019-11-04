@@ -22,7 +22,7 @@ pycodestyle==2.3.1
 pytest-cov==2.5.1
 pytest==3.2.2
 python-dateutil==2.6.1
-pyyaml==3.12              # via aspy.yaml, pre-commit
+pyyaml==5.1               # via aspy.yaml, pre-commit
 requests==2.18.4
 responses==0.8.0
 six==1.11.0
