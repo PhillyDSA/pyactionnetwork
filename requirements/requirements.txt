@@ -4,10 +4,17 @@
 #
 #    pip-compile --output-file requirements/requirements.txt requirements/requirements.in
 #
-certifi==2017.7.27.1      # via requests
-chardet==3.0.4            # via requests
-idna==2.6                 # via requests
+certifi==2022.12.7
+    # via requests
+chardet==3.0.4
+    # via requests
+idna==2.6
+    # via requests
 python-dateutil==2.6.1
+    # via -r requirements.in
 requests==2.18.4
-six==1.11.0               # via python-dateutil
-urllib3==1.22             # via requests
+    # via -r requirements.in
+six==1.11.0
+    # via python-dateutil
+urllib3==1.22
+    # via requests
