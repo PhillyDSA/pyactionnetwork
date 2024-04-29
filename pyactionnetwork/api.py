@@ -73,6 +73,7 @@ class ActionNetworkApi:
 
     def create_person(self,
                       email=None,
+                      phone=None,
                       given_name='',
                       family_name='',
                       address=list(),
@@ -89,6 +90,8 @@ class ActionNetworkApi:
         Args:
             email ((str, list)):
                 email address (or, if list, addresses) of the person
+            phone ((str, list)):
+                phone number (or, if list, numbers) of the person
             given_name (str, optional):
                 first name of the person
             family_name (str, optional):
@@ -127,6 +130,9 @@ class ActionNetworkApi:
                 'email_addresses': [{
                     'address': email
                 }],
+                'phone_numbers': [{
+                    'number': phone
+                }],
                 'custom_fields': custom_fields,
             },
             'add_tags': list(tags)
@@ -138,6 +144,7 @@ class ActionNetworkApi:
     def update_person(self,
                       person_id=None,
                       email=None,
+                      phone=None,
                       given_name=None,
                       family_name=None,
                       address=list(),
@@ -152,6 +159,8 @@ class ActionNetworkApi:
         Args:
             email ((str, list)):
                 email address (or, if list, addresses) of the person
+            phone ((str, list)):
+                phone number (or, if list, numbers) of the person
             given_name (str, optional):
                 first name of the person
             family_name (str, optional):
@@ -187,6 +196,9 @@ class ActionNetworkApi:
             }],
             'email_addresses': [{
                 'address': email
+            }],
+            'phone_numbers': [{
+                'number': phone
             }],
             'add_tags': list(tags),
             'custom_fields': custom_fields,
