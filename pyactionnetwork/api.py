@@ -48,12 +48,12 @@ class ActionNetworkApi:
         url = self.resource_to_url(resource)
         return requests.get(url, headers=self.headers).json()
 
-    def get_person(self, person_id=None, search_by='email', search_string=None):
+    def get_person(self, person_id=None, search_by='email_address', search_string=None):
         """Search for a user.
 
         Args:
             search_by (str):
-                Field by which to search for a user. 'email' is the default.
+                Field by which to search for a user. 'email_address' is the default.
             search_string (str):
                 String to search for within the field given by `search_by`
 
