@@ -86,7 +86,7 @@ class Tagging(ANBaseModel):
     """
 
     def __repr__(self):
-        return 'Tagging(id={0}, name={1})'.format(self.id, self.name)
+        return 'Tagging(id={0})'.format(self.id)
 
 
 class Person(ANBaseModel):
