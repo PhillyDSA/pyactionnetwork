@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
+import logging
+
 import requests
 from urllib.parse import quote
+
+logger = logging.getLogger(__name__)
 
 
 class ActionNetworkApi:
@@ -15,10 +20,34 @@ class ActionNetworkApi:
         self.base_url = self.config.get('links', {}).get('self', 'https://actionnetwork.org/api/v2/')
         print(self.config['motd'])
 
+    def request(self, verb, url, timeout=5, json=None):
+        kwargs = {
+            "headers": self.headers,
+            "timeout": os.environ.get("PYACTIONNETWORK_TIMEOUT", timeout),
+            "url": url
+        }
+        if json:
+            kwargs.update({"json": json})
+        return requests.request(
+            verb,
+            **kwargs
+        )
+
+    def request_json(self, verb, url, json=None, quiet=False):
+        if not quiet:
+            logger.debug(f"{verb} {url} {json}")
+        r = self.request(verb, url, json=json)
+        if not quiet:
+            if 'content-type' in r.headers.keys():
+                content_type = ' ' + r.headers['content-type']
+            else:
+                content_type = ''
+            logger.debug(f"{r.status_code}{content_type} {r.text}")
+        return r.json()
+
     def refresh_config(self):
         """Get a new version of the base_url config."""
-        self.config = requests.get(url="https://actionnetwork.org/api/v2/",
-                                   headers=self.headers).json()
+        self.config = self.request_json("GET", url="https://actionnetwork.org/api/v2/")
 
     def resource_to_url(self, resource):
         """Convert a named endpoint into a URL.
@@ -46,7 +75,7 @@ class ActionNetworkApi:
             (dict) API response from endpoint or `None` if not found/valid.
         """
         url = self.resource_to_url(resource)
-        return requests.get(url, headers=self.headers).json()
+        return self.request_json("GET", url=url)
 
     def get_person(self, person_id=None, search_by='email', search_string=None):
         """Search for a user.
@@ -68,8 +97,7 @@ class ActionNetworkApi:
                 search_by,
                 quote(search_string))
 
-        resp = requests.get(url, headers=self.headers)
-        return resp.json()
+        return self.request_json("GET", url=url)
 
     def create_person(self,
                       email=None,
@@ -132,8 +160,7 @@ class ActionNetworkApi:
             'add_tags': list(tags)
         }
 
-        resp = requests.post(url, json=payload, headers=self.headers)
-        return resp.json()
+        return self.request_json("POST", url=url, json=payload)
 
     def update_person(self,
                       person_id=None,
@@ -192,8 +219,7 @@ class ActionNetworkApi:
             'custom_fields': custom_fields,
         }
 
-        resp = requests.put(url, json=payload, headers=self.headers)
-        return resp.json()
+        return self.request_json("PUT", url=url, json=payload)
 
     def search(self, resource, operator, term):
         """Search for a given `term` within a `resource`.
